@@ -1,0 +1,9 @@
+main : com.github.qc03.QCShop.Main
+name : QCShop
+version : 0.0.1
+author : QC
+description : QC Advanced Shop Plugin
+
+commands:
+  상점:
+    description: 상점관리 명령어
