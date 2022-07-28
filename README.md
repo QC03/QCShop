@@ -17,6 +17,9 @@
 #### 1. ShopList
 #### 2. ShopId
 #### 3. ShopPrice
+  - Money
+  - Cash
+  - Items
 #### 4. ShopNPC
 #### 5. ShopGUI
   - General
