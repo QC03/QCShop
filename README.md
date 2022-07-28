@@ -6,9 +6,10 @@
 ## **Command**
 
 1. /상점 생성 <display_name>
-2. /상점 열기 <shop_id>
-3. /상점 설정 <shop_id>
-4. /상점 상세설정 <obj>
+2. /상점 목록
+3. /상점 열기 <shop_id>
+4. /상점 설정 <shop_id>
+5. /상점 상세설정 <obj>
  
 
 ## **Database** *(MariaDB)*
