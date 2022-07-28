@@ -13,24 +13,24 @@
 
 ## **Database** *(MariaDB)*
 
-1. ShopList
-2. ShopId
-3. ShopPrice
-4. ShopNPC
-### ShopGUI
-  1. General
-  2. Setting
-  3. PriceSet
-  4. ItemPriceSet
+#### 1. ShopList
+#### 2. ShopId
+#### 3. ShopPrice
+#### 4. ShopNPC
+#### 5. ShopGUI
+  - General
+  - Setting
+  - PriceSet
+  - ItemPriceSet
 
 
 
 ## **Events**
 
- 1. NpcClick
-### GUIClick
-   1. Setting
-   2. General
-   3. PriceSet
-### GUIClose
-   1. ItemPrice
+#### 1. NpcClick
+#### 2. GUIClick
+   - Setting
+   - General
+   - PriceSet
+#### 3. GUIClose
+   - ItemPrice
