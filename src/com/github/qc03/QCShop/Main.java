@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.github.qc03.Command.ShopCmd;
 import com.github.qc03.Database.DBConnection.DBConnection;
 import com.github.qc03.Events.NpcClick;
+import com.github.qc03.Events.GUI.Setting;
 
 public class Main extends JavaPlugin implements Listener {
 	
@@ -21,6 +22,7 @@ public class Main extends JavaPlugin implements Listener {
 		
 		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new NpcClick(this), this);
+		getServer().getPluginManager().registerEvents(new Setting(this), this);
 		
 		getCommand("상점").setExecutor(new ShopCmd());
 		
@@ -35,4 +37,3 @@ public class Main extends JavaPlugin implements Listener {
 		
 	}
 }
-	

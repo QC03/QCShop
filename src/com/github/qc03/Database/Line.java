@@ -20,7 +20,7 @@ public class Line {
 			
 			stmt.executeUpdate("use " + DBConnection.dbName);
 			
-			String selectSQL = "SELECT 'Line' FROM " + DBConnection.tableName + " WHERE 'Id' = " + Id;
+			String selectSQL = "SELECT Line FROM " + DBConnection.tableName + " WHERE Id = " + Id;
 			ResultSet rs = stmt.executeQuery(selectSQL);
 			
 			while (rs.next()) {
@@ -50,7 +50,7 @@ public class Line {
 			
 			stmt.executeUpdate("use " + DBConnection.dbName);
 			
-			String updateSQL = "UPDATE " + DBConnection.tableName + " SET 'Line' = " + line + " WHERE 'Id' = " + Id;
+			String updateSQL = "UPDATE " + DBConnection.tableName + " SET Line = " + line + " WHERE Id = " + Id;
 			stmt.executeUpdate(updateSQL);
 			
 			con.close();

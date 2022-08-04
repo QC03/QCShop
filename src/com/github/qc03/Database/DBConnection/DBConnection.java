@@ -15,7 +15,7 @@ public class DBConnection {
 	
 	public static Connection getConnection()
 	{
-		String url = "jdbc:mysql://localhost/" + dbName + "?characterEncoding=UTF-8&serverTimezone=UTC";
+		String url = "jdbc:mysql://localhost/?characterEncoding=UTF-8&serverTimezone=UTC";
 		String user = "root";
 		String password = "zxcvv1324!";
 		
@@ -41,23 +41,20 @@ public class DBConnection {
 			
 			DatabaseMetaData dbm = con.getMetaData();
 			ResultSet tables = dbm.getTables(null, null, tableName, null);
-			if (tables.next())
+			if (!(tables.next()))
 			{ 
 				con.close();
 				stmt.close();
 				return;
 			}
 			
-			String createTableSQL = "CREATE TABLE " + tableName +
-	                   " (Id INT(255) not NULL, " +
-	                   " displayName CHAR(36) not NULL, " + 
-	                   " Line INT(9) not NULL, " +
-	                   " NPC INT(255), " +
-	                   " Items VARCHAR, " +
-	                   " MoneyPrice INT, " +
-	                   " CashPrice INT, " +
-	                   " ItemPrice VARCHAR, " +
-	                   " PRIMARY KEY ( Id ))";
+			String createTableSQL = "CREATE TABLE " + tableName + "(" +
+	                   "Id 				INT 		not NULL, " +
+	                   "displayName 	CHAR(36) 	not NULL, " + 
+	                   "Line 			TINYINT(9) 	not NULL, " +
+	                   "NPC 			INT, " +
+	                   "Items 			TEXT, " +
+	                   "PRIMARY 		KEY(Id))";
 			
 			stmt.executeUpdate(createTableSQL);
 			

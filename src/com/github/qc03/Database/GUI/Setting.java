@@ -10,13 +10,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.qc03.Database.DisplayName;
-import com.github.qc03.Database.Items;
 import com.github.qc03.Database.Line;
 import com.github.qc03.Database.NPC;
+import com.github.qc03.Database.ShopItems;
 
 public class Setting {
 
-	private String getPrefix = "[상점설정] ";
 	private Inventory inv;
 	private int line;
 	
@@ -24,29 +23,28 @@ public class Setting {
 	{
 		
 		line = Line.getLine(Id);
-		
-		inv = Bukkit.createInventory(null, (this.line)+3, this.getPrefix + DisplayName.getDisplayName(Id));
+		inv = Bukkit.createInventory(null, (((this.line)+3) *9), "[상점설정] " + DisplayName.getDisplayName(Id) + " [" + Id + "]");
 		
 		try {
-			inv.addItem((ItemStack[]) Items.getItems(Id).toArray().clone());
+			inv.addItem((ItemStack[]) ShopItems.getItems(Id).toArray().clone());
 			
 		} catch (IllegalArgumentException | ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
 		
-		initializeSettingItems(Id);
+		initializeItems(Id);
 		return inv;
 	}
 	
 	private ItemStack guiBar = new ItemStack(Material.STAINED_GLASS_PANE, 1);
-	private void initializeSettingItems(int Id)
+	private void initializeItems(int Id)
 	{
 		
 		int slot = ((this.line) - 3);
 		// set Gui Bar Design
 		for ( int barSlot = slot; barSlot <= ((slot)+9); barSlot++)
 		{
-			inv.setItem(barSlot, this.guiBar);
+			inv.setItem(barSlot, this.guiBar.clone());
 			slot++;
 		}
 		

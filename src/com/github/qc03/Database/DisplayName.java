@@ -21,7 +21,7 @@ public class DisplayName {
 			
 			stmt.executeUpdate("use " + DBConnection.dbName);
 			
-			String selectSQL = "SELECT 'displayName' FROM " + DBConnection.tableName + " WHERE 'Id' = " + Id;
+			String selectSQL = "SELECT displayName FROM " + DBConnection.tableName + " WHERE Id = " + Id;
 			ResultSet rs = stmt.executeQuery(selectSQL);
 			
 			while (rs.next()) {

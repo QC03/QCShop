@@ -7,7 +7,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.qc03.Database.DisplayName;
-import com.github.qc03.Database.Items;
+import com.github.qc03.Database.ShopItems;
+import com.github.qc03.Database.GUI.LoreSet.GeneralLore;
 import com.github.qc03.Database.Line;
 
 public class General {
@@ -16,10 +17,16 @@ public class General {
 	
 	public Inventory getGUI(int Id)
 	{
-		Inventory inv = Bukkit.createInventory(null, Line.getLine(Id), this.getPrefix + DisplayName.getDisplayName(Id));
+		Inventory inv = Bukkit.createInventory(null, ((Line.getLine(Id)) *9), this.getPrefix + DisplayName.getDisplayName(Id) + " [ " + Id + " ]");
 
 		try {
-			inv.addItem((ItemStack[]) Items.getItems(Id).toArray().clone());
+			
+			int slot = 0;
+			for (Object slotItem : ShopItems.getItems(Id).toArray().clone())
+			{
+				inv.setItem(slot, GeneralLore.loreSetItem((ItemStack) slotItem, Id, slot));
+				slot++;
+			}
 			
 		} catch (IllegalArgumentException | ClassNotFoundException | IOException e) {
 			e.printStackTrace();

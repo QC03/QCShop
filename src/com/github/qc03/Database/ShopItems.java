@@ -12,11 +12,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.inventory.ItemStack;
+
 import com.github.qc03.Database.DBConnection.DBConnection;
 
-import net.minecraft.server.v1_12_R1.ItemStack;
-
-public class Items {
+public class ShopItems {
 
 	public static byte[] serialize(List<ItemStack> items) throws IOException
 	{
@@ -96,6 +96,8 @@ public class Items {
 			con.close();
 			stmt.close();
 
+			if (serializedItems == null) { return deserializedItems; }
+			
 			deserializedItems = deserialize(serializedItems);
 			return deserializedItems;
 			

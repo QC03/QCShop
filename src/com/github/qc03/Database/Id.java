@@ -31,17 +31,21 @@ public class Id {
 				Ids.add(rs.getInt("Id"));
 			}
 			
+			Ids.sort(Comparator.naturalOrder());
+			
 			con.close();
 			stmt.close();
 			
-			Ids.sort(Comparator.naturalOrder());
-			return (int) Collections.max(Ids);
+			int Id = 0;
+			if (Ids.size() > 0) { Id = (int) Collections.max(Ids); }
+
+			return  Id;
 			
 		} catch (SQLException e) {
-			
+			e.printStackTrace();
 		}
-		
-		return -1;
+
+		return -999;
 	}
 	
 	public static boolean isShopId(int Id)

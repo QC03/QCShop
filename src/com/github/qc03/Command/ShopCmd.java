@@ -14,7 +14,7 @@ import com.github.qc03.Database.GUI.Setting;
 
 public class ShopCmd implements CommandExecutor {
 
-	public static String cmdPrefix = ChatColor.YELLOW + "[Cash] " + ChatColor.RESET;
+	public static String cmdPrefix = ChatColor.YELLOW + "[Shop] " + ChatColor.RESET;
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
@@ -35,7 +35,13 @@ public class ShopCmd implements CommandExecutor {
 		
 		if (args[0].equals("목록"))
 		{
-			for ( Object list : ShopList.getShopList(null, -1))
+			
+			int page = 1;
+			
+			// has input page value
+			if (args.length >= 2) { page = Integer.parseInt(args[1]); }
+			
+			for ( Object list : ShopList.getShopList(null, page))
 			{
 				player.sendMessage((String) list);
 			}
@@ -77,12 +83,14 @@ public class ShopCmd implements CommandExecutor {
 			
 			General shopGui = new General();
 			player.openInventory(shopGui.getGUI(shopId));
+			return true;
 		}
 		
 		if (args[0].equals("설정"))
 		{
 			Setting settingGui = new Setting();
 			player.openInventory(settingGui.getGUI(shopId));
+			return true;
 		}
 		
 		return false;
