@@ -7,7 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.QCUtilLib.Message.ErrorMessage;
+import com.github.qc03.Database.DisplayName;
 import com.github.qc03.Database.Id;
+import com.github.qc03.Database.NPC;
 import com.github.qc03.Database.ShopList;
 import com.github.qc03.Database.GUI.General;
 import com.github.qc03.Database.GUI.Setting;
@@ -65,16 +67,10 @@ public class ShopCmd implements CommandExecutor {
 		}
 		
 		
-		if (args[0].equals("상세설정"))
-		{
-			
-		}
-		
-		
 		int shopId = Integer.parseInt(args[1]);
 		if (!(Id.isShopId(shopId)))
 		{
-			ErrorMessage.sendError(player, "정수만 입력 가능합니다.");
+			ErrorMessage.sendError(player, "존재하지 않는 상점입니다.");
 			return false;
 		}
 		
@@ -91,6 +87,30 @@ public class ShopCmd implements CommandExecutor {
 			Setting settingGui = new Setting();
 			player.openInventory(settingGui.getGUI(shopId));
 			return true;
+		}
+		
+		
+		
+		if (args.length < 3)
+		{
+			ErrorMessage.sendError(player, "모든 값을 입력해주세요.");
+			return false;
+		}
+		
+		
+		if (args[0].equals("NPC"))
+		{
+			int npcId = Integer.parseInt(args[2]);
+			NPC.setNpcId(shopId, npcId);
+			player.sendMessage(cmdPrefix + " 상점NPC를 성공적으로 변경하였습니다.");
+		}
+		
+		
+		if (args[0].equals("이름"))
+		{
+			String shopName = args[2];
+			DisplayName.setDisplayName(shopId, shopName);
+			player.sendMessage(cmdPrefix + " 상점이름을 성공적으로 변경하였습니다.");
 		}
 		
 		return false;

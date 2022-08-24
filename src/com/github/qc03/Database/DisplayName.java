@@ -42,4 +42,25 @@ public class DisplayName {
 		
 		return displayName;
 	}
+
+	public static void setDisplayName(int Id, String shopName) {
+		
+		try {
+			
+			Connection con = DBConnection.getConnection();
+			Statement stmt = con.createStatement();
+			
+			stmt.executeUpdate("use " + DBConnection.dbName);
+			
+			String updateSQL = "UPDATE " + DBConnection.tableName + " SET displayName = '" + shopName + "' WHERE Id = " + Id;
+			stmt.executeUpdate(updateSQL);
+			
+			con.close();
+			stmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

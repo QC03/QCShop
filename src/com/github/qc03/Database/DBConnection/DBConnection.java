@@ -15,7 +15,7 @@ public class DBConnection {
 	
 	public static Connection getConnection()
 	{
-		String url = "jdbc:mysql://localhost/?characterEncoding=UTF-8&serverTimezone=UTC";
+		String url = "jdbc:mysql://localhost/?characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true";
 		String user = "root";
 		String password = "zxcvv1324!";
 		

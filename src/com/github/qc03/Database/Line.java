@@ -57,7 +57,7 @@ public class Line {
 			stmt.close();
 			
 		} catch (SQLException e) {
-			
+			e.printStackTrace();
 		}
 	}
 }

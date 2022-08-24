@@ -1,6 +1,5 @@
 package com.github.qc03.Database;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +18,7 @@ public class PriceData {
 	
 	public class Money
 	{
+		
 		public int getPrice(int Id, int slot, String type)
 		{
 			
@@ -31,7 +31,7 @@ public class PriceData {
 				
 				String coulum = type + "_Money";
 				
-				String selectSQL = "SELECT '" + coulum + "' FROM " + ShopList.getPriceTableName(Id) + "WHERE slot = " + slot;
+				String selectSQL = "SELECT " + coulum + " FROM " + ShopList.getPriceTableName(Id) + " WHERE slot = " + slot;
 				ResultSet rs = stmt.executeQuery(selectSQL);
 				
 				while (rs.next())
@@ -40,7 +40,6 @@ public class PriceData {
 					break;
 				}
 				
-				con.close();
 				stmt.close();
 				
 				return price;
@@ -64,8 +63,6 @@ public class PriceData {
 				
 				String updateSQL = "UPDATE " + ShopList.getPriceTableName(Id) + " SET '" + coulum + "' = " + price + " WHERE 'slot' = " + slot;
 				stmt.executeUpdate(updateSQL);
-				
-				con.close();
 				stmt.close();
 				
 			} catch (SQLException e) {
@@ -94,6 +91,17 @@ public class PriceData {
 				return true;
 			}
 		}
+		
+		public boolean isTradeable(int Id, int slot)
+		{
+			if (isBuyable(Id, slot) || isSellable(Id, slot) )
+			{
+				return true;
+				
+			} else {
+				return false;
+			}
+		}
 	}
 	
 	public class Cash
@@ -101,7 +109,7 @@ public class PriceData {
 		public int getPrice(int Id, int slot, String type)
 		{
 			
-			int price = 0;
+			int price = -1;
 			
 			try {
 				
@@ -110,7 +118,7 @@ public class PriceData {
 				
 				String coulum = type + "_Cash";
 				
-				String selectSQL = "SELECT '" + coulum + "' FROM " + ShopList.getPriceTableName(Id) + "WHERE slot = " + slot;
+				String selectSQL = "SELECT " + coulum + " FROM " + ShopList.getPriceTableName(Id) + " WHERE slot = " + slot;
 				ResultSet rs = stmt.executeQuery(selectSQL);
 				
 				while (rs.next())
@@ -118,8 +126,6 @@ public class PriceData {
 					price = rs.getInt(coulum);
 					break;
 				}
-				
-				con.close();
 				stmt.close();
 				
 				return price;
@@ -143,8 +149,6 @@ public class PriceData {
 				
 				String updateSQL = "UPDATE " + ShopList.getPriceTableName(Id) + " SET '" + coulum + "' = " + price + " WHERE 'slot' = " + slot;
 				stmt.executeUpdate(updateSQL);
-				
-				con.close();
 				stmt.close();
 				
 			} catch (SQLException e) {
@@ -171,6 +175,17 @@ public class PriceData {
 				return false;
 			} else {
 				return true;
+			}
+		}
+		
+		public boolean isTradeable(int Id, int slot)
+		{
+			if (isBuyable(Id, slot) || isSellable(Id, slot) )
+			{
+				return true;
+				
+			} else {
+				return false;
 			}
 		}
 	}
@@ -189,27 +204,22 @@ public class PriceData {
 				
 				String coulum = type + "_Items";
 				
-				String selectSQL = "SELECT '" + coulum + "' FROM " + ShopList.getPriceTableName(Id) + "WHERE slot = " + slot;
+				String selectSQL = "SELECT " + coulum + " FROM " + ShopList.getPriceTableName(Id) + " WHERE slot = " + slot;
 				ResultSet rs = stmt.executeQuery(selectSQL);
 				
-				byte[] serializedItems = null;
+				String serializedItems = null;
 				while (rs.next())
 				{
-					serializedItems = rs.getString(coulum).getBytes();
+					serializedItems = rs.getString(coulum);
 					break;
 				}
-				
-				con.close();
 				stmt.close();
 				
-				deserializedItems = ShopItems.deserialize(serializedItems);
+				ItemSerializer serializer = new ItemSerializer();
+				deserializedItems = serializer.deserializeList(serializedItems);
 				return deserializedItems;
 				
 			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
@@ -224,18 +234,13 @@ public class PriceData {
 				Statement stmt = con.createStatement();
 				stmt.executeUpdate("use " + DBConnection.dbName);
 				
+				ItemSerializer serializer = new ItemSerializer();
 				String coulum = type + "_Items";
-				
-				String updateSQL = "UPDATE " + ShopList.getPriceTableName(Id) + " SET '" + coulum + "' = " + ShopItems.serialize(items).toString() + " WHERE 'slot' = " + slot;
+				String updateSQL = "UPDATE " + ShopList.getPriceTableName(Id) + " SET '" + coulum + "' = " + serializer.serialize(items) + " WHERE 'slot' = " + slot;
 				stmt.executeUpdate(updateSQL);
-				
-				con.close();
 				stmt.close();
 				
 			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -259,6 +264,17 @@ public class PriceData {
 				return false;
 			} else {
 				return true;
+			}
+		}
+		
+		public boolean isTradeable(int Id, int slot)
+		{
+			if (isBuyable(Id, slot) || isSellable(Id, slot) )
+			{
+				return true;
+				
+			} else {
+				return false;
 			}
 		}
 	}
